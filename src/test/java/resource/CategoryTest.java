@@ -38,7 +38,7 @@ public class CategoryTest {
 				.post(baseResource)
 			.then()
 				.statusCode(201)
-				//.header("Location",RestAssured.baseURI  + baseResource + "/6" )
+				.header("Location",RestAssured.baseURI  + baseResource + "/1" )
 		;
 	}
 	@Test
