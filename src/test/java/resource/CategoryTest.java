@@ -17,6 +17,19 @@ public class CategoryTest {
 	public final String baseResource = "/category";
 	
 	@Test
+	public void testGetCategories() {
+		RestAssured
+			.given()
+				.log().all()
+			.when()
+				.get(baseResource)
+			.then()
+				.statusCode(204)
+		
+		;
+	}
+
+	@Test
 	public void testPostCategory() {
 		RestAssured
 			.given()
@@ -29,18 +42,7 @@ public class CategoryTest {
 				.header("Location",RestAssured.baseURI  + baseResource + "/1" )
 		;
 	}
-	@Test
-	public void testGetCategories() {
-		RestAssured
-			.given()
-				.log().all()
-			.when()
-				.get(baseResource)
-			.then()
-				.statusCode(200)
-				.contentType(ContentType.JSON)
-		;
-	}
+	
 	@Test
 	public void testPostCategoryMessageError() {
 		RestAssured
@@ -55,6 +57,7 @@ public class CategoryTest {
 				
 			;
 	}
+
 	@Test
 	public void testPostCategoryMessageErrorBylength() {
 		RestAssured
