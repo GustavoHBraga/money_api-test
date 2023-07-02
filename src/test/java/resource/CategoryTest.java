@@ -11,7 +11,7 @@ public class CategoryTest {
 	
 	@BeforeClass
 	public static void setup() {
-		RestAssured.baseURI = "http://localhost:8888/money-backend";
+		RestAssured.baseURI = "http://localhost:8006/money-backend";
 	}
 	
 	public final String baseResource = "/category";
