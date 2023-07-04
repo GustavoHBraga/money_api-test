@@ -24,7 +24,7 @@ public class CategoryTest {
 			.when()
 				.get(baseResource)
 			.then()
-				.statusCode(204)
+				.statusCode(200)
 		
 		;
 	}
