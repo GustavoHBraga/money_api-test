@@ -1,5 +1,9 @@
 package resource;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.List;
+
 import org.hamcrest.CoreMatchers;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -11,7 +15,7 @@ public class CategoryTest {
 	
 	@BeforeClass
 	public static void setup() {
-		RestAssured.baseURI = "http://localhost:8006/money-backend";
+		RestAssured.baseURI = "http://172.23.176.1:8006/money-backend";
 	}
 	
 	public final String baseResource = "/category";
@@ -31,16 +35,28 @@ public class CategoryTest {
 
 	@Test
 	public void testPostCategory() {
-		RestAssured
-			.given()
+		
+		// Cria uma nova categoria e obtem o codigo gerado
+		int cod = RestAssured.given()
 				.body("{\"name\":\"Amazon-prime\"}")
 				.contentType(ContentType.JSON)
 			.when()
 				.post(baseResource)
 			.then()
 				.statusCode(201)
-				.header("Location",RestAssured.baseURI  + baseResource + "/1" )
+				.extract().path("cod")
+			
 		;
+		
+		// Deleta a cateogia baseado no codigo gerado
+		RestAssured.given()
+			.when()
+				.delete(baseResource + '/' + cod)
+			.then()
+				.statusCode(204)
+				
+		;
+		
 	}
 	
 	@Test
@@ -60,7 +76,7 @@ public class CategoryTest {
 
 	@Test
 	public void testPostCategoryMessageErrorBylength() {
-		RestAssured
+		List<?> userMessage = RestAssured
 			.given()
 				.body("{\"name\":\"A\"}")
 				.contentType(ContentType.JSON)
@@ -68,9 +84,27 @@ public class CategoryTest {
 				.post(baseResource)
 			.then()
 				.statusCode(400)
-				.contentType(ContentType.JSON)
+				.extract().path("userMessage")
+			
 				
 			;
+		assertEquals(userMessage.get(0), "Name must be min 3 and max 50 characters");
 	}
 	
+	@Test
+	public void testPostCategoryMessageNotNull() {
+		List<?> userMessage = RestAssured
+			.given()
+				.body("{\"name\":null}")
+				.contentType(ContentType.JSON)
+			.when()
+				.post(baseResource)
+			.then()
+				.statusCode(400)
+				.extract().path("userMessage")
+			
+				
+			;
+		assertEquals(userMessage.get(0), "Name is required");
+	}
 }
