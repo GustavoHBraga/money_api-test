@@ -239,7 +239,7 @@ public class PersonTest {
 						+ "}")
 				.contentType(ContentType.JSON)
 				.when()
-					.put(locationFistPerson + "/adress")
+					.put(locationFistPerson + "/address")
 				.then()
 					.statusCode(200)
 					.extract().path("informationAdress.address")
