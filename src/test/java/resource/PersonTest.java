@@ -14,7 +14,8 @@ public class PersonTest {
 
 	@BeforeClass
 	public static void setup() {
-		RestAssured.baseURI = "http://localhost:8006/money-backend";
+		//RestAssured.baseURI = "http://localhost:8006/money-backend";
+		RestAssured.baseURI = "http://localhost:8081";
 	}
 	
 	public final String baseResource = "/person";
@@ -95,7 +96,7 @@ public class PersonTest {
 		List<?> userMessage = RestAssured.given()
 				.body("{\r\n"
 						+ "   \"name\": null,\r\n"
-						+ "    \"active\": null,\r\n"
+						+ "    \"active\": true,\r\n"
 						+ "    \"informationAdress\": {\r\n"
 						+ "        \"address\": \"Rua das palmeiras\",\r\n"
 						+ "        \"number\": 145,\r\n"
@@ -239,7 +240,7 @@ public class PersonTest {
 						+ "}")
 				.contentType(ContentType.JSON)
 				.when()
-					.put(locationFistPerson + "/adress")
+					.put(locationFistPerson + "/address")
 				.then()
 					.statusCode(200)
 					.extract().path("informationAdress.address")
