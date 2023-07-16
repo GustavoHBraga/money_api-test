@@ -22,13 +22,36 @@ public class PersonTest {
 	@Test
 	public void testGetPeople() {
 		RestAssured
-			.given()
-				.log().all()
+			.given()				
 			.when()
 				.get(baseResource)
 			.then()
-				.statusCode(200);
+				.statusCode(200)
+				.contentType(ContentType.JSON);
 	}
+	
+	@Test
+	public void testFindPerson() {
+		RestAssured
+			.given()				
+			.when()
+				.get(baseResource + "/1")
+			.then()
+				.statusCode(200)
+				.contentType(ContentType.JSON);
+	}
+	
+	@Test
+	public void testNotFoundPerson() {
+		RestAssured
+			.given()				
+			.when()
+				.get(baseResource + "/15164541")
+			.then()
+				.statusCode(404);
+	}
+	
+	
 	@Test
 	public void testPostPerson(){
 		String headerLocation = RestAssured.given()

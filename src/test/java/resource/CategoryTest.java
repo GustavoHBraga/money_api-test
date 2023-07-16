@@ -23,11 +23,33 @@ public class CategoryTest {
 	public void testGetCategories() {
 		RestAssured
 			.given()
-				.log().all()
 			.when()
 				.get(baseResource)
 			.then()
 				.statusCode(200)
+		
+		;
+	}
+	@Test
+	public void testFindCategory() {
+		RestAssured
+			.given()
+			.when()
+				.get(baseResource + "/1")
+			.then()
+				.statusCode(200)
+				.contentType(ContentType.JSON)
+		
+		;
+	}
+	@Test
+	public void testNotFoundCategory() {
+		RestAssured
+			.given()
+			.when()
+				.get(baseResource + "/151515161561")
+			.then()
+				.statusCode(404)
 		
 		;
 	}
