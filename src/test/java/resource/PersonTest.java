@@ -14,8 +14,7 @@ public class PersonTest {
 
 	@BeforeClass
 	public static void setup() {
-		//RestAssured.baseURI = "http://localhost:8006/money-backend";
-		RestAssured.baseURI = "http://localhost:8081";
+		RestAssured.baseURI = "http://localhost:8006/money-backend";
 	}
 	
 	public final String baseResource = "/person";
